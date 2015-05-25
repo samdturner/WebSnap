@@ -6,4 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Photo.create!(url: 'http://i.imgur.com/yH62KXc.jpg?1', delete_time: Time.new(2002))
+new_album = Album.create!(name: "New Album", delete_time: Time.new(2000))
+
+Photo.create!(url: 'http://i.imgur.com/yH62KXc.jpg?1',
+              delete_time: Time.new(2002),
+              album_id: new_album.id)
