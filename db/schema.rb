@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529065323) do
+ActiveRecord::Schema.define(version: 20150601060813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,15 +23,32 @@ ActiveRecord::Schema.define(version: 20150529065323) do
     t.datetime "updated_at"
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "photos", force: :cascade do |t|
-    t.string   "url",         null: false
-    t.time     "delete_time", null: false
+    t.string   "original_url", null: false
+    t.time     "delete_time",  null: false
     t.integer  "album_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "delete_hash"
+    t.string   "imgur_url",    null: false
   end
 
-  add_index "photos", ["url"], name: "index_photos_on_url", using: :btree
+  add_index "photos", ["original_url"], name: "index_photos_on_original_url", using: :btree
 
 end
